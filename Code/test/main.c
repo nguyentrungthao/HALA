@@ -26,15 +26,24 @@ typedef enum {
 
 void readFile() {
     printf("doc file \n");
-    THROW(FILE_ERROR, "loi doc file: file khong ton tai");
+    FILE* file = fopen("test.txt", "r");
+    if (file == NULL) {
+        THROW(FILE_ERROR, "loi doc file: file khong ton tai\r\n");
+    }
+    fclose(file);
+    printf("hoan thanh doc file\r\n");
 }
 
 void networkOperation() {
-
+    printf("ket noi mang \n");
+    THROW(NETWORK_ERROR, "loi mang: khong the ket noi mang\r\n");
+    THROW(NETWORK_ERROR, "loi duong dan: duong dan khong ton tai\r\n");
+    printf("ngat ket noi mang\n");
 }
 
 void calculateData() {
-
+    THROW(CALCULATION_ERROR, "loi tinh data: tham so dau vao khong hop le \r\n");
+    THROW(CALCULATION_ERROR, "loi tinh data: phep tinh khong hop le\r\n");
 }
 
 int main() {
@@ -45,7 +54,11 @@ int main() {
        calculateData();
     } CATCH(FILE_ERROR) {
         printf("%s\n", error_message);
-    } // Bổ sung thêm nhiều CATCH
+    } CATCH(NETWORK_ERROR) {
+        printf("%s\n", error_message);
+    } CATCH(CALCULATION_ERROR) {
+        printf("%s\n", error_message);
+    }
 
     return 0;
 }
