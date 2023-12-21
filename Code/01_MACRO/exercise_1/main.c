@@ -1,3 +1,7 @@
+/*
+https://docs.google.com/document/d/1nV9TDixts6o130T66SCbS2XHGR-Dtiy20Xedag4S62o/edit#heading=h.aq94o7ja5lhn
+*/
+
 #include <stdio.h>
 
 // Macro xử lý lỗi

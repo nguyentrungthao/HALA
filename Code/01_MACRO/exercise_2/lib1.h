@@ -7,7 +7,7 @@
 
 #define add(...) do {\
                         int sum = 0;\
-                        int a[] = { __VAR_ARGS__ };\
+                        int a[] = { __VA_ARGS__ };\
                         uint8_t n = sizeof(a) / sizeof(a[0]);\
                         for (uint8_t i = 0; i < n; i++) {\
                             sum += a[i];\
