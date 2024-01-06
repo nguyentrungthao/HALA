@@ -2,63 +2,58 @@
 #include <stdio.h>
 #include <string.h>
 #include <setjmp.h>
-
-//? --------------------------------------làm sao giấu những biến này đi-------------------------------------- 
-jmp_buf buf; //static 
-int exception_code; //extern 
-char error_message[50]; //? làm sao để chuỗi lỗi ko giới hạn ?
-//? --------------------------------------làm sao giấu những biến này đi-------------------------------------- 
+#include <stdlib.h>
+#include <stdint.h>
 
 
-#define TRY if ((exception_code = setjmp(buf)) == 0) 
-#define CATCH(x) else if (exception_code == (x)) 
-#define THROW(x, err_mess) do{ \
-                        strncpy(error_message, err_mess, 50);\
-                        longjmp(buf, (x));\
-                        }while (0)
+/*
+* @brief
 
-typedef enum {
-    NO_ERROR,
-    FILE_ERROR,
-    NETWORK_ERROR,
-    CALCULATION_ERROR
-} ErrorCodes;
+*
 
-void readFile() {
-    printf("doc file \n");
-    FILE* file = fopen("test.txt", "r");
-    if (file == NULL) {
-        THROW(FILE_ERROR, "loi doc file: file khong ton tai\r\n");
-    }
-    fclose(file);
-    printf("hoan thanh doc file\r\n");
-}
+*/
+// int main() {
+//     int* ptr = (int*)malloc(sizeof(int));
+//     printf("ptr: %p\n", ptr);
 
-void networkOperation() {
-    printf("ket noi mang \n");
-    THROW(NETWORK_ERROR, "loi mang: khong the ket noi mang\r\n");
-    THROW(NETWORK_ERROR, "loi duong dan: duong dan khong ton tai\r\n");
-    printf("ngat ket noi mang\n");
-}
+//     int* ptr1 = (int*)malloc(sizeof(int));
+//     printf("ptr1: %p\n", ptr1);
+//     printf("------------\n");
 
-void calculateData() {
-    THROW(CALCULATION_ERROR, "loi tinh data: tham so dau vao khong hop le \r\n");
-    THROW(CALCULATION_ERROR, "loi tinh data: phep tinh khong hop le\r\n");
-}
+//     ptr = (int*)realloc(ptr, 8);
+//     for (uint8_t i = 0; i < 8; i++) {
+//         printf("ptr: %p\n", ptr + i);
+//     }
+//     printf("------------\n");
+
+//     // int* ptr2 = (int*)malloc(sizeof(int));
+//     // printf("ptr2: %p\n", ptr2);
+
+//     // free(ptr);
+//     // free(ptr1);
+//     // free(ptr2);
+
+//     return 0;
+// }
+
+// #include <stdio.h>
+
+// #define PRINT(...) printf("%s\r\n", __VA_ARGS__)
+// #define leverUp(x) CHUYEN_THANH_CHUOI(x)
+// #define CHUYEN_THANH_CHUOI(x) #x
+// #define GHEP_CHUOI(a, b) a##b
+
+// int main() {
+
+//     PRINT(leverUp(GHEP_CHUOI(chao, Thao)));
+//     PRINT(CHUYEN_THANH_CHUOI(chao));
+//     PRINT("hello");
+
+//     return 0;
+// }
+
 
 int main() {
 
-    TRY{
-       readFile();
-       networkOperation();
-       calculateData();
-    } CATCH(FILE_ERROR) {
-        printf("%s\n", error_message);
-    } CATCH(NETWORK_ERROR) {
-        printf("%s\n", error_message);
-    } CATCH(CALCULATION_ERROR) {
-        printf("%s\n", error_message);
-    }
-
-    return 0;
+    printf("%f", .01);
 }

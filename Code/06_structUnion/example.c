@@ -2,7 +2,7 @@
 https://docs.google.com/presentation/d/1gIkSOpN9eyfSiYzR7r4u38F8IAY9shXsIfiRSHrl85o/edit#slide=id.p
 */
 
-include <stdio.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 
