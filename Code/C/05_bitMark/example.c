@@ -18,14 +18,10 @@ typedef uint8_t CarColor;
 typedef uint8_t CarPower;
 typedef uint8_t CarEngine;
 
-
-
 #define SUNROOF_MASK 1 << 0     // 0001
 #define PREMIUM_AUDIO_MASK 1 << 1 // 0010
 #define SPORTS_PACKAGE_MASK 1 << 2 // 0100
 // Thêm các bit masks khác tùy thuộc vào tùy chọn
-
-
 
 //! bit mark lấy kiểu dữ liệu lớn nhất trong struct để cấp phát vùng nhớ 
 typedef struct {

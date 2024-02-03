@@ -9,9 +9,6 @@ https://docs.google.com/presentation/d/1SkldoAr55T358UnTCT352EVwkzJ0f_aFdNs0tBzI
 #include <ctype.h>
 #include <stdbool.h>
 
-
-
-
 typedef enum {
     JSON_NULL,
     JSON_BOOLEAN,
