@@ -93,14 +93,176 @@ Tính Mở Rộng: Cấu trúc chương trình cần cho phép dễ dàng mở r
 */
 
 #include <stdio.h>
+#include <string.h>
+#include "./include/LinkList.h"
+#include "./include/Member.h"
+
+#define FILE_NAME "./data/data.csv"
+#define REMOVE_ENDLINE_STDIN()     do {\
+                            char c;\
+                            while ((c = getchar()) != '\n' && c != EOF);\
+                            } while (0) 
+
+typedef enum {
+    add_member,
+    delete_member,
+    find_UID_member,
+    find_licensePlates_member,
+    update_member,
+    out
+} Choose_t;
+
+void printData(Member data);
+void printList(node* list);
+Member enterData();
 
 int main(int argc, char const* argv[]) {
-    
-    // int a = add(1, 2);
-    int a = 1;
-    printf("%d", a);
+    node* list = NULL;
+    char searchValue[20];
+    char deleteUID[20];
+    Choose_t choose = 1;
+    initData(FILE_NAME, &list);
+
+    while (choose != 5) {
+        printf("\nMenu:\n");
+        printf("0 - Add member\n");
+        printf("1 - Delete member\n");
+        printf("2 - Search by UID\n");
+        printf("3 - Search by license plate\n");
+        printf("4 - Update member\n");
+        printf("5 - Exit\n");
+        printf("Choose: ");
+        scanf("%d", &choose);
+
+        switch (choose) {
+        case add_member: {
+            Member newMember;
+            printf("Enter information for the new member:\n");
+            newMember = enterData();
+
+            addMember(FILE_NAME, &list, newMember);
+            printf("Member has been added.\n");
+            break;
+        }
+        case delete_member: {
+            printf("Enter the UID of the member to delete: ");
+            scanf("%s", deleteUID);
+            REMOVE_ENDLINE_STDIN();
+            printf("%s\r\n", deleteUID);
+            deleteMember(FILE_NAME, &list, deleteUID);
+            break;
+        }
+        case find_UID_member: {
+            printf("Enter the UID to search: ");
+            scanf("%s", searchValue);
+            REMOVE_ENDLINE_STDIN();
+
+            int pos = searchMember(list, searchValue, searchByUID);
+            if (pos > -1) {
+                printf("member:\r\n");
+                printData(get(list, pos));
+            }
+            else {
+                printf("member does not exist\r\n");
+            }
+            break;
+        }
+        case find_licensePlates_member: {
+            printf("Enter the license plate to search: ");
+            scanf("%s", searchValue);
+            REMOVE_ENDLINE_STDIN();
+
+            int pos = searchMember(list, searchValue, searchByLicensePlate);
+            if (pos > -1) {
+                printf("member:\r\n");
+                printData(get(list, pos));
+            }
+            else {
+                printf("member does not exist\r\n");
+            }
+            break;
+        }
+        case update_member: {
+            Member updatedMember;
+            printf("Enter the UID of the member to update: ");
+            scanf("%s", updatedMember.uid);
+            REMOVE_ENDLINE_STDIN();
+
+            int pos = searchMember(list, updatedMember.uid, searchByUID);
+            if (pos > -1) {
+                printf("Enter the new information:\n");
+                updatedMember = enterData();
+
+                editMember(FILE_NAME, &list, pos, updatedMember);
+                printf("Member information has been updated.\n");
+            }
+            else {
+                printf("no member update\r\n");
+            }
+
+            break;
+        }
+        case out:
+            printf("Goodbye!\n");
+
+            break;
+        default:
+            printf("Invalid choice. Please choose again.\r\n");
+            break;
+        }
+    }
+    saveData(FILE_NAME, list);
 
     return 0;
 }
 
+
+void printData(Member data) {
+    printf("uid: %s\r\n", data.uid);
+    printf("roomNumber: %s\r\n", data.roomNumber);
+    printf("name: %s\r\n", data.name);
+    printf("licensePlate: %s\r\n", data.licensePlate);
+}
+void printList(node* list) {
+    node* p;
+    p = list;
+
+    //* kiểm tra đã có phần tử nào chưa 
+    if (empty(p) == EMPTY) {
+        printf("list empty\r\n");
+        return;
+    }
+
+    while (p->next != NULL)    // free the last node in the list
+    {
+        printData(p->member);
+        printf("-----------\r\n");
+        p = p->next;
+    }
+    printData(p->member);
+    printf("-----------\r\n");
+
+}
+
+Member enterData() {
+    Member member;
+
+    printf("UID: ");
+    scanf("%s", member.uid);
+    REMOVE_ENDLINE_STDIN();
+
+    printf("Room Number: ");
+    scanf("%s", member.roomNumber);
+    REMOVE_ENDLINE_STDIN();
+
+    printf("Name: ");
+    fgets(member.name, sizeof(member.name), stdin);
+    member.name[strcspn(member.name, "\n")] = '\0';
+
+    printf("License Plate: ");
+    fgets(member.licensePlate, sizeof(member.licensePlate), stdin);
+    member.licensePlate[strcspn(member.licensePlate, "\n")] = '\0';
+
+    return member;
+}
 
