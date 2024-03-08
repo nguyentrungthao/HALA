@@ -132,7 +132,7 @@ int main(int argc, char const* argv[]) {
         printf("4 - Update member\n");
         printf("5 - Exit\n");
         printf("Choose: ");
-        scanf("%d", &choose);
+        scanf("%d", &choose); //! Nhập chế độ này hơi sai do kiểu int chứ ko phải enum
 
         switch (choose) {
         case add_member: {
@@ -204,7 +204,6 @@ int main(int argc, char const* argv[]) {
         }
         case out:
             printf("Goodbye!\n");
-
             break;
         default:
             printf("Invalid choice. Please choose again.\r\n");
