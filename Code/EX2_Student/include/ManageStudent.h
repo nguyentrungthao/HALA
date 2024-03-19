@@ -40,7 +40,6 @@ private:
     int sortByName(const Student& student1, const Student& student2);
     int sortByID(const Student& student1, const Student& student2);
     std::string fileName;
-    std::ifstream file;
     std::list<Student> listSortByNameStudent;
     std::list<Student> listSortByIDStudent;
 

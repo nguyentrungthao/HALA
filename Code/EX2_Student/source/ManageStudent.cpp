@@ -128,7 +128,7 @@ Status ManageStudent::changeStudent(std::string ID, Student Student) {
  * @return Status
  */
 Status ManageStudent::deteleStudent(std::string ID) {
-    listSortByIDStudent.remove_if([std::string ID](const Student& student) { return (student.getID()).compare(ID); });
+    listSortByIDStudent.remove_if([ID](const Student& student) { return (student.getID()).compare(ID); });
 }
 /**
  *@brief find student

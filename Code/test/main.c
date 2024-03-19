@@ -7,7 +7,6 @@
 
 
 
-*/
 // int main() {
 //     int* ptr = (int*)malloc(sizeof(int));
 //     printf("ptr: %p\n", ptr);
@@ -48,8 +47,16 @@
 //     return 0;
 // }
 
+int sum(int a, int b) {
+    return a + b;
+}
+
 int main() {
 
-    
+    float c = 0;
+    void* ptr[2] = { sum, &c };
+
+    printf("%d %d", (int)(*(ptr + 1)));
+
     return 0;
 }
